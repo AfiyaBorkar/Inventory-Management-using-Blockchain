@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management </title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .row h2 {
+            margin-top: 20px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg  bg-dark sticky-top " data-bs-theme="dark" >
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./" style="color: white">Inventory Management</a>
+          
+          
+          </div>
+        </div>
+      </nav>
+    <div class="container mt-5">
+        <h2>Manufacturer Portal</h2>
+        <div class="row">
+           
+            <div class="col-lg-12">
+                Manufacturer <select id="accountSelect" class="form-control">
+                </select>
+
+              
+                  <div id="manufactureProduct col-lg-6">
+                <fieldset id="manufactureProduct">
+
+
+                    <legend>Manufacture a Product</legend>
+                    <div class="form-group ">
+                        <label for="id">Product ID:</label>
+                        <input id="id" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Product Name:</label>
+                        <input id="name" type="text" class="form-control" placeholder="Enter Product name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bname">Brand Name:</label>
+                        <input id="bname" type="text" class="form-control" placeholder="Enter Brand Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input id="quantity" type="text" class="form-control" placeholder="Enter quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="mdate">Manufacturing Date:</label>
+                        <input id="mdate" type="text" class="form-control" placeholder="Enter Manufacturing Date: ">
+                    </div>
+                    <div class="form-group">
+                        <label for="edate">Expiry Date:</label>
+                        <input id="edate" type="text" class="form-control" placeholder="Enter Expiry  Date: ">
+                    </div>
+                    <button id="button" class="btn btn-primary">Add Product</button>
+                </fieldset>
+            </div>
+            <div id="deliverProduct col-lg-6">
+                <fieldset class="mt-5">
+
+                    <legend>Deliver a Product</legend>
+                    <div class="form-group">
+                        <label for="did">Product ID:</label>
+                        <input id="did" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="dname">Retailer Address:</label>
+                        <input id="daddress" type="text" class="form-control" placeholder="Enter Product name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dquantity">Quantity:</label>
+                        <input id="dquantity" type="text" class="form-control" placeholder="Enter quantity">
+                    </div>
+
+                    <button id="dbutton" class="btn btn-primary">Deliver Product</button>
+                </fieldset>
+            </div>
+                <br><br>
+
+
+                <fieldset class="mt-5">
+                    <legend>Product</legend>
+                    <div class="form-group">
+                        <label for="ppid">Product ID:</label>
+                        <input id="ppid" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+
+                    <button id="btnDetails" class="btn btn-primary">Get Products</button>
+                    <div id="product-details"></div>
+
+
+                </fieldset>
+
+                <fieldset class="mt-5">
+                    <legend>Get Particular product total</legend>
+                    <div class="form-group">
+                        <label for="gid">Product ID:</label>
+                        <input id="gid" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+                    <button id="btnCount" class="btn btn-primary">Particular product Count</button>
+                    <div id="btnCount-details"></div>
+
+                </fieldset>
+                <fieldset>
+                    <fieldset class="mt-5">
+                        <legend>Products Count</legend>
+                        <button id="pbtnCount" class="btn btn-primary">Product Counts</button>
+                        <div id="pbtnCount-details"></div>
+
+
+                    </fieldset>
+                </fieldset>
+
+                <fieldset>
+
+                    <legend>Get Retailer Product Detail</legend>
+                    <div class="form-group">
+                        <label for="pid">Product ID:</label>
+                        <input id="pid" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="raddress">Retailer Address:</label>
+                        <input id="raddress" type="text" class="form-control" placeholder="Enter Product name">
+                    </div>
+
+
+                    <button id="btnRDetails" class="btn btn-primary">Get Retailer Product Details</button>
+                    <div id="retailer-product-details"></div>
+                </fieldset>
+
+
+
+                <fieldset>
+
+
+                    <legend>Update Product</legend>
+                    <div class="form-group ">
+                        <label for="upid">Product ID:</label>
+                        <input id="upid" type="text" class="form-control" placeholder="Enter you existing Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="upname">Product Name:</label>
+                        <input id="upname" type="text" class="form-control" placeholder="Enter Product name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="upbname">Brand Name:</label>
+                        <input id="upbname" type="text" class="form-control" placeholder="Enter Brand Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="upquantity">Quantity:</label>
+                        <input id="upquantity" type="text" class="form-control" placeholder="Enter quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="upmdate">Manufacturing Date:</label>
+                        <input id="upmdate" type="text" class="form-control" placeholder="Enter Manufacturing Date: ">
+                    </div>
+                    <div class="form-group">
+                        <label for="upedate">Expiry Date:</label>
+                        <input id="upedate" type="text" class="form-control" placeholder="Enter Expiry  Date: ">
+                    </div>
+                    <button id="upbutton" class="btn btn-primary">Update Product</button>
+                </fieldset>
+                <br><br>
+
+
+
+                <fieldset class="mt-5">
+                    <legend>Update Retailer Address</legend>
+                    <div class="form-group">
+                        <label for="uraid">Product ID:</label>
+                        <input id="uraid" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="uraoaddress">Old Retailer Address:</label>
+                        <input id="uraoaddress" type="text" class="form-control" placeholder="Enter Product name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uranaddress">New Retailer Address:</label>
+                        <input id="uranaddress" type="text" class="form-control" placeholder="Enter quantity">
+                    </div>
+
+                    <button id="urabutton" class="btn btn-primary">Update </button>
+                </fieldset>
+
+
+                <fieldset class="mt-5">
+                    <legend>Update Retailer Product</legend>
+                    <div class="form-group">
+                        <label for="urpid">Product ID:</label>
+                        <input id="urpid" type="text" class="form-control" placeholder="Enter Product ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="urpaddress">Retailer Address:</label>
+                        <input id="urpaddress" type="text" class="form-control" placeholder="Enter Product name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="urpquantity">New Quantity:</label>
+                        <input id="urpquantity" type="text" class="form-control" placeholder="Enter quantity">
+                    </div>
+
+                    <button id="urpbutton" class="btn btn-primary">Update Product</button>
+                </fieldset>
+            </div>
+            <div class="col-lg-6">
+
+
+
+
+            </div>
+
+
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+
+            <script>
+                const contractABI = [
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "_retailer",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_quantity",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "deliverProduct",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "getProduct",
+                        "outputs": [
+                            {
+                                "internalType": "string",
+                                "name": "",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "_retailer",
+                                "type": "address"
+                            }
+                        ],
+                        "name": "getRetailerProductDetails",
+                        "outputs": [
+                            {
+                                "internalType": "string",
+                                "name": "",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "getTotalProductQuantity",
+                        "outputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "_productName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "_brandName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_quantity",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_manufacturingDate",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_expiryDate",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "manufactureProduct",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "products",
+                        "outputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "productName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "brandName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "quantity",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "manufacturingDate",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "expiryDate",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "manufacturer",
+                                "type": "address"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [],
+                        "name": "productsCount",
+                        "outputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                            }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "_productName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "_brandName",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_quantity",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_manufacturingDate",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_expiryDate",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "updateProduct",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "_oldRetailer",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "_newRetailer",
+                                "type": "address"
+                            }
+                        ],
+                        "name": "updateRetailerAddress",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    },
+                    {
+                        "inputs": [
+                            {
+                                "internalType": "uint256",
+                                "name": "_productId",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "address",
+                                "name": "_retailer",
+                                "type": "address"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "_newQuantity",
+                                "type": "uint256"
+                            }
+                        ],
+                        "name": "updateRetailerProduct",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function"
+                    }
+                ];
+
+                const contractAddress = '0x4FB9205852634BB4B40D9a21cdc0499228f3CB27'; //remix
+
+                const web3 = new Web3('http://localhost:7545');
+                const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+
+                web3.eth.getAccounts().then(function (accounts) {
+                    const accountSelect = document.getElementById("accountSelect");
+
+                    // Add an option for each account
+                    accounts.forEach(function (account) {
+                        const option = document.createElement("option");
+                        option.text = account;
+                        option.value = account;
+                        accountSelect.add(option);
+                    });
+
+                    // Set the default account to the first account in the list
+                    web3.eth.defaultAccount = accounts[0];
+                    from = accounts[0];
+
+                    // Update the default account when a new option is selected
+                    accountSelect.addEventListener("change", function () {
+                        web3.eth.defaultAccount = this.value;
+                        from = this.value;
+                        //alert(from)
+
+                    });
+
+                    // Get the current gas price
+                    web3.eth.getGasPrice().then(function (gasPrice) {
+                        console.log("Gas price in Wei: " + gasPrice);
+                        console.log("Gas price in Gwei: " + web3.utils.fromWei(gasPrice, 'Gwei'));
+                        gas = 300000;
+                    });
+
+
+                    // Log the default account to the console
+                    console.log("Default account:", web3.eth.defaultAccount);
+
+
+
+                    $("#button").click(function () {
+
+                        contract.methods.manufactureProduct($("#id").val(), $("#name").val(), $("#bname")
+                            .val(), $("#quantity").val(), $("#mdate").val(), $("#edate").val()).send({
+                                from: from,
+                                gas: gas
+                            })
+                            .on('receipt', function (receipt) {
+                                alert('New product record created!');
+                                console.log('Transaction hash:', receipt.transactionHash);
+                            })
+                            .on('error', function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+
+
+                    });
+
+
+
+
+                    //deliver a product
+                    $("#dbutton").click(function () {
+
+                        contract.methods.deliverProduct($("#did").val(), $("#daddress").val(), $("#dquantity").val()).send({
+                            from: from,
+                            gas: gas
+                        })
+                            .on('receipt', function (receipt) {
+                                alert('deliver product record created!');
+                                console.log('Transaction hash:', receipt.transactionHash);
+                            })
+                            .on('error', function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+
+
+                    });
+
+
+
+                    //
+
+
+
+
+
+
+                    $("#btnRDetails").click(function () {
+                        contract.methods.getRetailerProductDetails($("#pid").val(), $("#raddress").val()).call()
+                            .then(function (result) {
+                                console.log('Retailer Product details:', result);
+                                $("#retailer-product-details").html('Product Name: ' + result[0] + '<br> Brand name: ' + result[1] +
+                                    '<br />' + 'Manufacturer Date: ' + result[2] + '<br />' + 'Expiry Date : ' +
+                                    result[3] + '<br />' + ' Quantity: ' +
+                                    result[4] + '<br><br>');
+                            })
+                            .catch(function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+                    });
+
+                    $("#btnDetails").click(function () {
+                        contract.methods.products($("#ppid").val()).call()
+                            .then(function (result) {
+                                console.log('Product details:', result);
+                                $("#product-details").html('Product Id: ' + result[0] + '<br> Product name: ' + result[1] +
+                                    '<br />' + 'Brand name: ' + result[2] + '<br />' + 'Quantity ' +
+                                    result[3] + '<br />' + 'Manufacturer Date: ' +
+                                    result[4] + '<br />' + 'Expiry Date : ' + result[5] + '<br><br>');
+                            })
+                            .catch(function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+                    });
+
+
+                    //For getting student details
+                    $("#btnCount").click(function () {
+                        contract.methods.getTotalProductQuantity($("#gid").val()).call()
+                            .then(function (result) {
+                                console.log('getTotalProductQuantity details:', result);
+                                $("#btnCount-details").html('getTotalProductQuantity: ' + result)
+                            })
+                            .catch(function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+                    });
+
+
+                    //For getting Student Count
+                    $("#pbtnCount").click(function () {
+                        contract.methods.productsCount().call()
+                            .then(function (result) {
+                                console.log('Get Particular product counts:', result);
+                                $("#pbtnCount-details").html('Product Count: ' + result);
+                            })
+                            .catch(function (error) {
+                                console.error(error);
+                                alert("Something Went wrong" + error);
+
+                            });
+                    });
+
+
+
+                    $("#upbutton").click(function () {
+
+                        contract.methods.updateProduct($("#upid").val(), $("#upname").val(), $("#upbname").val(), $("#upquantity").val(), $("#upmdate").val(), $("#upedate").val()).send({
+                            from: from,
+                            gas: gas
+                        })
+                            .on('receipt', function (receipt) {
+                                alert('Product updated');
+                                console.log('Transaction hash:', receipt.transactionHash);
+                            })
+                            .on('error', function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+
+
+                    });
+
+                    $("#urabutton").click(function () {
+
+                        contract.methods.updateRetailerAddress($("#uraid").val(), $("#uraoaddress").val(), $("#uranaddress")
+                            .val()).send({
+                                from: from,
+                                gas: gas
+                            })
+                            .on('receipt', function (receipt) {
+                                alert('updated');
+                                console.log('Transaction hash:', receipt.transactionHash);
+                            })
+                            .on('error', function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+
+
+                    });
+
+                    $("#urpbutton").click(function () {
+
+                        contract.methods.updateRetailerProduct($("#urpid").val(), $("#urpaddress").val(), $("#urpquantity").val()).send({
+                            from: from,
+                            gas: gas
+                        })
+                            .on('receipt', function (receipt) {
+                                alert('Product updated');
+                                console.log('Transaction hash:', receipt.transactionHash);
+                            })
+                            .on('error', function (error) {
+                                console.error(error);
+                                alert("Something Went wrong");
+
+                            });
+
+
+                    });
+
+
+
+
+
+
+
+                });
+            </script>
+
+</body>
+
+</html>
